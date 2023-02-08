@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Text to SQL</title>
+  </head>
+  <body>
+    <form action="{{ url_for('result') }}" method="post">
+      <label for="text">Enter Text:</label>
+      <input type="text" id="text" name="text">
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>
