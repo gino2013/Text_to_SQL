@@ -1,8 +1,8 @@
 import openai
-import pymongo
+import sqlite3
 
 # Apply for an OpenAI API key and replace the value below with your own key
-openai.api_key = "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"
+openai.api_key = "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"
 
 
 def text_to_sql(text):
@@ -19,23 +19,19 @@ def text_to_sql(text):
     return message
 
 
-text = "get the total number of '_id' from the insurance table"
+# text = 'get the total number of ''sex'' from the Insurance table'
+text = 'get the average number of ''age'' from the Insurance table'
 sql = text_to_sql(text)
 generated_sql = sql.replace('\n', '')
 
-# Extract the generated SQL from the API response
-print("Generated SQL:", generated_sql)
+# Connect to SQLite database
+conn = sqlite3.connect("medical_insurance.db")
 
-# Connect to MongoDB
-client = pymongo.MongoClient("mongodb://localhost:27017/")
-db = client["Mongo"]
-collection = db["insurance"]
+cursor = conn.cursor()
 
-# Insert the generated SQL into MongoDB
-result = collection.insert_one({"generated_sql": generated_sql})
-
-# Print the generated SQL result
-result = collection.find({})
+# Execute the generated SQL
+cursor.execute(generated_sql)
+result = cursor.fetchall()
 
 for document in result:
     print(document)

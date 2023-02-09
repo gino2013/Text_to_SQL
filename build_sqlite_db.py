@@ -1,32 +1,20 @@
 import sqlite3
+import csv
 
-# Connect to or create a SQLite database
-conn = sqlite3.connect("dummy.db")
-
-# Create a cursor
+# 連接到SQLite數據庫
+conn = sqlite3.connect('medical_insurance.db')
 cursor = conn.cursor()
 
-# Execute a SQL command to create a table
-cursor.execute("""
-CREATE TABLE Customers (
-    id INTEGER PRIMARY KEY,
-    name TEXT NOT NULL,
-    age INTEGER NOT NULL
-)
-""")
+with open('Insurance.csv', 'r') as file:
+    reader = csv.reader(file)
+    headers = next(reader)
+    # 創建表
+    cursor.execute(
+        f"CREATE TABLE IF NOT EXISTS Insurance ({','.join([' '.join([header, 'text']) for header in headers])})")
+    for row in reader:
+        cursor.execute(
+            f"INSERT INTO Insurance VALUES ({','.join(['?' for header in headers])})", row)
 
-# Insert sample data into the table
-cursor.execute("""
-INSERT INTO Customers (name, age)
-VALUES
-    ("John Doe", 35),
-    ("Jane Doe", 32),
-    ("Jim Smith", 40),
-    ("Jill Smith", 38)
-""")
-
-# Commit the changes
+# 提交事務並關閉連接
 conn.commit()
-
-# Close the connection
 conn.close()

@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title>Text to SQL</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: black;
+        color: white;
+        font-size: 18px;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1 {
+        font-size: 36px;
+        margin-bottom: 20px;
+        text-shadow: 0 0 10px white;
+      }
+      label {
+        font-size: 24px;
+      }
+      input[type="text"] {
+        width: 600px;
+        height: 300px;
+        font-size: 24px;
+        text-align: center;
+        box-shadow: 0 0 10px white;
+        white-space: pre-wrap;
+      }
+      input[type="submit"] {
+        width: 100px;
+        height: 50px;
+        font-size: 24px;
+        margin-top: 20px;
+        box-shadow: 0 0 10px white;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="{{ url_for('result') }}" method="post">
+      <h1>Text to SQL</h1>
+      <label for="text">Please Enter Text:</label>
+      <br>
+      <input type="text" id="text" name="text" value="">
+      <br></br>
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>
